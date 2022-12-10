@@ -14,6 +14,8 @@ const CreatePage = () => {
         formState: { errors },
     } = useForm();
 
+    // const bscTestToken = "0xa2dFFea4f70d3F17f168120112627ff51C57e3F6"
+    // const bscTestLuckyDraw = "0xd5b2698acAE508A30EF19B1a8D44081754Aa1923"
     const bscTestToken = "0xa2dFFea4f70d3F17f168120112627ff51C57e3F6"
     const bscTestLuckyDraw = "0xd5b2698acAE508A30EF19B1a8D44081754Aa1923"
 
