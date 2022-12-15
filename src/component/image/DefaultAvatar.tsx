@@ -68,7 +68,6 @@ export const DefaultAvatarWithRoundBackground = (props: { account, height?: numb
             backgroundColor: '#00000044',
         }} className={'default-avatar-with-round-background ' + (className || '')}>
         </div>
-    let color = getRandomColor(account)
     let { r: r1, g: g1, b: b1 } = getRandomRGB1(account)
     let { r: r2, g: g2, b: b2 } = getRandomRGB2(account)
     return <div className={'default-avatar-with-round-background ' + (className || '')} style={{

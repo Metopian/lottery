@@ -8,7 +8,7 @@ import Index from './page/Index';
 import { Menu } from './component/Menu';
 import { useConnectWallet } from '@web3-onboard/react';
 import CreateRafflePage from './page/create';
-import JoinPage from './page/JoinPage';
+import JoinPage from './page/join';
 
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
       let ele = (document.getElementsByTagName("onboard-v2")[0] as HTMLElement)
       let sr = ele.shadowRoot
       let toaster = sr?.getElementById("account-center-with-notify") as HTMLElement
-      if (toaster && toaster.style.display != 'none') {
+      if (toaster && toaster.style.display !== 'none') {
         toaster.style.display = 'none'
         clearInterval(int)
       }
@@ -42,7 +42,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/create" element={<CreateRafflePage />} />
-          <Route path="/join" element={<JoinPage />} />
+          <Route path="/app" element={<JoinPage />} />
         </Routes>
       </BrowserRouter>
 

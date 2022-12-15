@@ -35,13 +35,13 @@ const menuItems = [
         link: '/',
     }, {
         name: 'App',
-        link: "/join"
+        link: "/app"
     }
 ]
 
-const NetworkSelector = props => {
+const NetworkSelector = () => {
     const [{ wallet }] = useConnectWallet()
-    const [account, chainId] =
+    const [, chainId] =
         useMemo(() => wallet?.accounts?.length ? [wallet.accounts[0].address, wallet.chains[0].id] : [], [wallet])
 
     const onChange = (chain) => {
@@ -49,7 +49,7 @@ const NetworkSelector = props => {
     }
 
     const chainInfo = useMemo(() => {
-        if (parseInt(chainId) == 97) {
+        if (parseInt(chainId) === 97) {
             return <>
                 <img src="https://oss.metopia.xyz/imgs/bsc.svg" alt="" />
                 <div className="text">BNB Testnet</div>
@@ -90,7 +90,7 @@ const Menu = (props) => {
     const { active } = props
     const [{ wallet }, connect, disconnect] = useConnectWallet()
 
-    const [account, chainId] =
+    const [account, ] =
         useMemo(() => wallet?.accounts?.length ? [wallet.accounts[0].address, wallet.chains[0].id] : [], [wallet])
 
     return <div className="menu-bar">
@@ -121,7 +121,7 @@ const Menu = (props) => {
                                         localStorage.setItem("disconnect", 'true')
                                         e.stopPropagation()
                                     }}>
-                                        <img src="https://oss.metopia.xyz/imgs/exit.svg" />
+                                        <img src="https://oss.metopia.xyz/imgs/exit.svg" alt=""/>
                                         <div className='text'>Disconnect</div></div>
                                 </div>
                             </div>

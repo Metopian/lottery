@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React from 'react'
 import Datetime from 'react-datetime'
-import { FormGroup, Input, Label, Textarea } from '../../../component/form'
+import { FormGroup, Input, Label } from '../../../component/form'
 import './BasicSettingsPage.scss'
 
 const BasicSettingsPage = (props: { onChange, data }) => {
@@ -10,19 +10,7 @@ const BasicSettingsPage = (props: { onChange, data }) => {
     return <div className='basic-settings-subpage'>
         <div className='form'>
             <FormGroup>
-                <Label required="true">Event title</Label>
-                <Input
-                    value={data.title}
-                    onChange={e => onChange({ title: e.target.value.trim() })} />
-            </FormGroup>
-            <FormGroup>
-                <Label required="true">Event Introduction</Label>
-                <Textarea value={data.body} onChange={(e) => {
-                    onChange({ body: e.target.value })
-                }} />
-            </FormGroup>
-            <FormGroup>
-                <Label required="true">Start time</Label>
+                <Label>Start time</Label>
                 <Datetime dateFormat={"YYYY-MM-DD"} timeFormat={"HH:mm"} renderInput={(props, openCalendar, closeCalendar) => {
                     return <div className='time-input-wrapper'>
                         <input {...props} className="r-input" placeholder={"Start time"}
@@ -36,7 +24,7 @@ const BasicSettingsPage = (props: { onChange, data }) => {
                 }} value={data.start} />
             </FormGroup>
             <FormGroup>
-                <Label required="true">End time</Label>
+                <Label>End time</Label>
                 <Datetime dateFormat={"YYYY-MM-DD"} timeFormat={"HH:mm"} renderInput={(props, openCalendar, closeCalendar) => {
                     return <div className='time-input-wrapper'>
                         <input {...props} className="r-input" placeholder={"Start time"}
@@ -50,17 +38,39 @@ const BasicSettingsPage = (props: { onChange, data }) => {
                 }} value={data.end} />
             </FormGroup>
             <FormGroup >
-                <Label>Set ticket price</Label>
-                <div className='tip'>Test token: <a href={"https://testnet.bscscan.com/address/0x24a3c07df3fc5d4535c9bcfe82aae8ffdc85b3f9"}>0x24A3c07df3fC5D4535C9BCfe82aAE8FFdc85B3f9</a></div>
+                <Label>Reward supply</Label>
+                <div className='tip'>How many participants could win the rewards</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <Input type="number" className="short"
-                        minValue={1}
+                        value={data.winners}
+                        onChange={(e) => {
+                            onChange({ winners: e.target.value })
+                        }} />
+                    <div></div>
+                </div>
+            </FormGroup>
+            <FormGroup >
+                <Label>Ticket price</Label>
+                <div className='tip' >What's the fee to join the raffle</div>
+                <div className='tip' style={{ marginTop: '-8px' }}>Test token: <a href={"https://testnet.bscscan.com/address/0xd564906f62AD6c370aD1a23c51F3800624517129"}>0xd564906f62AD6c370aD1a23c51F3800624517129</a></div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <Input type="number" className="short"
                         value={data.ticketPrice}
                         onChange={(e) => {
-                            // console.log(val)
                             onChange({ ticketPrice: e.target.value })
                         }} />
-                    <div>* 10^18</div>
+                    <div>* 10^18 (decimals)</div>
+                </div>
+            </FormGroup>
+            <FormGroup >
+                <Label>Initial pool size</Label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <Input type="number" className="short"
+                        value={data.initSize}
+                        onChange={(e) => {
+                            onChange({ initSize: e.target.value })
+                        }} />
+                    <div>* 10^18 (decimals)</div>
                 </div>
             </FormGroup>
 

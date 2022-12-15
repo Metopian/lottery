@@ -1,0 +1,37 @@
+@import '../../global.scss';
+
+.join-page {
+    >.container{
+        margin-bottom: 40px;
+    }
+
+    >.title {
+        font-size: 32px;
+        font-family: Fjalla One;
+        margin-bottom: 40px;
+        width: 1200px;
+
+        img {
+            transform: translate(-8px, 2px);
+            margin-right: 8px;
+        }
+
+        .description{
+            font-size: 18px;
+            font-family: Montserrat;
+            color:#ffffff88;
+            margin-top: 8px;
+        }
+    }
+
+
+    >.footer {
+        height: 100px;
+        @include flex-centered-container;
+        gap: 24px;
+        border-top: 1px solid #555555;
+        width: 100vw;
+        background: rgba(42, 53, 71, 0.3);
+        // transform: translateX(min(calc(-50vw + 600px), 0px));
+    }
+}

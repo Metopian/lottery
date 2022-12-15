@@ -1,0 +1,29 @@
+.creation-review-container {
+    margin:  0  0 32px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    >.title{
+        font-size: 22px;
+        font-family: Fjalla One;
+        color: white;
+        margin-bottom: 4px;
+    }
+
+    >.group {
+        display: flex;
+        align-items: center;
+        height: 20px;
+        >label {
+            font-size: 16px     ;
+            color: #ffffff88;
+            width: 180px !important;
+            display: block;
+        }
+
+        >.val {
+            font-size: 16px;
+
+        }
+    }
+}

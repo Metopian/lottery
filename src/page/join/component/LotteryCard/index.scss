@@ -1,0 +1,95 @@
+@import '../../../../global.scss';
+
+.lotery-card {
+    // width: fit-content;
+    border-bottom: 1px solid rgba(42, 53, 71, 0.3);
+    padding-bottom: 32px;
+    margin-bottom: 32px;
+    border-radius: 8px;
+    border: 1px solid #ffffff44;
+    padding: 24px 40px;
+    background-color: rgba(42, 53, 71, 0.3);
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    >.title {
+        font-size: 24px;
+        font-weight: bold;
+        @include colorful;
+    }
+
+    button {
+        padding: 4px 12px;
+        border-radius: 6px;
+        font-size: 16px;
+
+        &:hover {
+            background: lightblue;
+        }
+    }
+
+    >.purchase-wrapper {
+        margin: 12px 0;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+
+        input {
+            font-size: 16px;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-left: 120px;
+        }
+
+        label {
+            height: 20px;
+            line-height: 20px;
+            font-size: 16px;
+        }
+
+        .main-button {
+            height: 32px;
+        }
+    }
+
+    >.function-wrapper {
+        margin-top: 32px;
+        display: flex;
+        gap: 24px;
+
+        .main-button {
+            width: 120px;
+        }
+    }
+
+    .info-container {
+        margin: 32px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        >.group {
+            display: flex;
+            align-items: center;
+
+            >label {
+                font-size: 16px;
+                color: #ffffff88;
+                width: 200px;
+                display: block;
+            }
+
+            >.val {
+                font-size: 16px;
+
+                a {
+                    font-weight: bold;
+                    margin-left: 8px;
+                    @include colorful;
+                }
+            }
+        }
+    }
+}

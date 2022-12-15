@@ -12,16 +12,6 @@ interface LazyLoadImageParam {
     style?: CSSProperties;
 }
 
-interface NftImageParam {
-    defaultSrc: string;
-    chainId: string;
-    contract: string;
-    tokenId: number;
-    width: number;
-    className?: string;
-    afterLoaded?;
-}
-
 const WrappedLazyLoadImage = (image: LazyLoadImageParam) => {
     const [loading, setLoading] = useState(true)
     const containerRef = useRef(null)
@@ -45,6 +35,7 @@ const WrappedLazyLoadImage = (image: LazyLoadImageParam) => {
         }
         return result || redirectedSrc
     }, [image, redirectedSrc])
+    
     return (
         <div className={'wrapped-lazy-load-image ' + (image.className ? image.className : '')} ref={containerRef} style={image?.style}>
             {

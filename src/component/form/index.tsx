@@ -1,6 +1,6 @@
 import Dropdown from 'rc-dropdown';
 import 'rc-dropdown/assets/index.css';
-import React, { CSSProperties, useMemo, useRef, useState } from 'react';
+import React, { CSSProperties, useRef, useState } from 'react';
 import 'react-dropdown/style.css';
 import ReactLoading from 'react-loading';
 import { toFixedIfNecessary } from '../../utils/numberUtils';
@@ -37,7 +37,6 @@ export const Tip = (props) => {
 export const Input = (props) => {
     const { loading, type, error, maxLength } = props
     const [focused, setFocused] = useState(false)
-    const [localError, setLocalError] = useState(null)
     const [len, setLen] = useState(props.value?.length || 0)
     return <div className={'r-input ' + (props.className ? props.className : "") +
         (type === 'number' ? ' number' : '') + (focused ? ' focused' : '')
@@ -187,9 +186,6 @@ export const SelectWithKeywordInput = (props: {
     const [keyword, setKeyword] = useState(props.keyword || '')
     if (!options || options.length === 0)
         return null
-    const options2 = [
-        'one', 'two', 'three'
-    ]
 
     return <div className={"r-select-v2"} style={style}>
         <Input onFocus={e => setDisplay(true)}
@@ -290,10 +286,8 @@ export const MultiSelectV2 = (props: {
 export const Select = (props: { options: { text, value: any }[], onChange, value?, style?: CSSProperties, defaultValue?, className?, invalidOption?}) => {
     const { options, defaultValue, onChange, className, style, value, invalidOption } = props
     const [display, setDisplay] = useState(false)
-    const [tmpValue, setTmpValue] = useState(value || defaultValue)
     if (!options || options.length === 0)
         return null
-    const val = value || tmpValue
 
     return <div className={'simple-select ' + className} defaultValue={defaultValue} style={style}>
         <div onFocus={e => setDisplay(true)} onBlur={e => {
@@ -313,14 +307,13 @@ export const Select = (props: { options: { text, value: any }[], onChange, value
                     }
                 }}
             >
-                <button className='Button'>{value ? (options.find(op => op.value == value)?.text ? options.find(op => op.value == value).text : (invalidOption || "Invalid")) : "Invalid"}</button>
+                <button className='Button'>{value ? (options.find(op => op.value === value)?.text ? options.find(op => op.value === value).text : (invalidOption || "Invalid")) : "Invalid"}</button>
             </Dropdown>
         </div>
         <div className={'drop-down-pane' + (display ? ' display' : '')}>
             {
                 options.map(op => {
                     return <div key={"option-" + op.value} className="option" onClick={e => {
-                        setTmpValue(op.value)
                         onChange(op.value)
                     }}>{op.text}</div>
                 })
@@ -415,12 +408,7 @@ export const unitTextToNum = (text) => {
 }
 
 export const DurationInput = (props: { onChange, value, onChangeUnit, unit: number, defaultValue?: number, style?: CSSProperties, placeholder?: number, unitRange?: number[] }) => {
-    const { placeholder, value, onChange, unit, unitRange, style, defaultValue } = props
-    const options = useMemo(() => {
-        return (unitRange || [1, 3600, 86400]).map(num => {
-            return <option value={num} key={"duration-input" + num}>{unitNumToText(num)}</option>
-        })
-    }, [unitRange])
+    const { placeholder, value, onChange, unit, style, defaultValue } = props
 
     return <div className="r-input-duration" style={style}>
         <div className='container'>
@@ -473,7 +461,7 @@ export const RadioGroup = (props: { value?: number, options: string[], onChange 
                     onChange(i)
                 }}>
                     <div className='symbol'>
-                        <img src="https://oss.metopia.xyz/imgs/check_box_on.svg" style={i === (value == null ? selected : value) ? null : { display: 'none' }} />
+                        <img src="https://oss.metopia.xyz/imgs/check_box_on.svg" alt="" style={i === (value == null ? selected : value) ? null : { display: 'none' }} />
                     </div>
                     <div className='text'>{op}</div>
                 </div>

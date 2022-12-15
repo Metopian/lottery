@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react'
-import './Index.scss';
+import React, { useMemo } from 'react';
 import HollowButton from '../component/button/HollowButton';
+import './Index.scss';
 
 const partners = [
     {
@@ -47,7 +47,7 @@ const IndexPage = () => {
             return <React.Fragment key={`sponsor-${i}`}>
                 <img src={s.logo} onClick={e => {
                     s.link && window.open(s.link)
-                }} style={s.height ? { height: s.height + 'px' } : null} />
+                }} style={s.height ? { height: s.height + 'px' } : null} alt="" />
             </React.Fragment>
         })
     }, [])
