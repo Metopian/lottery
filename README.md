@@ -3,7 +3,7 @@
 Metopia is the platform which empowers non-financialized governance and provides Web3 communtity tools.
 Metopian Luckydraw is built for community raffles and incentives.
 
-[Example](https://luckydraw.metopia.xyz/)
+[Online](https://luckydraw.metopia.xyz/)
 
 [Learn more](https://metopia.xyz/)
 
