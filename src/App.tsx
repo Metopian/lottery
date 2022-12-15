@@ -1,68 +1,68 @@
-import React from 'react'
-import './App.scss';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Index, { CreatePage, JoinPage } from './page';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.scss';
+import Index from './page/Index';
 
-import { init, Web3OnboardProvider } from '@web3-onboard/react'
-import injectedModule from '@web3-onboard/injected-wallets'
-import ledgerModule from '@web3-onboard/ledger'
-import { chainExplorerMap, chainMap, chainRpcMap, currencyMap } from "./config/constant";
-import coinbaseWalletModule from '@web3-onboard/coinbase'
+import { Menu } from './component/Menu';
+import { useConnectWallet } from '@web3-onboard/react';
+import CreateRafflePage from './page/create';
+import JoinPage from './page/JoinPage';
 
-const appMetadata = {
-  name: 'Metopia',
-  icon: 'https://oss.metopia.xyz/imgs/metopia-logo.svg',
-  logo: 'https://oss.metopia.xyz/imgs/metopia-logo.svg',
-  description: 'LOGIN',
-  recommendedInjectedWallets: [
-    { name: 'MetaMask', url: 'https://metamask.io' },
-    { name: 'Coinbase', url: 'https://wallet.coinbase.com/' },
-  ]
-}
-
-const injected = injectedModule()
-const ledger = ledgerModule()
-const coinbaseWalletSdk = coinbaseWalletModule({ darkMode: true })
-const web3Onboard = init({
-  wallets: [injected, coinbaseWalletSdk, ledger],
-  chains: ['0x1', '0x89', '0x38'].map(chainId => {
-    return {
-      id: chainId,
-      rpcUrl: chainRpcMap[chainId],
-      label: chainMap[chainId],
-      token: currencyMap[chainId],
-      blockExplorerUrl: chainExplorerMap[chainId]
-    }
-  }),
-  appMetadata
-})
 
 function App() {
+
+  const [{ wallet }, connect] = useConnectWallet()
+  useEffect(() => {
+    let disconnected = localStorage.getItem('disconnect')
+    if (!wallet && disconnected !== 'true') {
+      connect({ autoSelect: { label: 'MetaMask', disableModals: true } })
+    }
+    if (wallet && disconnected === 'true') {
+      localStorage.setItem("disconnect", 'false')
+    }
+  }, [wallet, connect])
+
+  useEffect(() => {
+    const int = setInterval(() => {
+      let ele = (document.getElementsByTagName("onboard-v2")[0] as HTMLElement)
+      let sr = ele.shadowRoot
+      let toaster = sr?.getElementById("account-center-with-notify") as HTMLElement
+      if (toaster && toaster.style.display != 'none') {
+        toaster.style.display = 'none'
+        clearInterval(int)
+      }
+    }, 100);
+  }, [])
+
   return (
     <div className="App">
-      <Web3OnboardProvider web3Onboard={web3Onboard}>
-        <BrowserRouter basename="">
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/create" element={<CreatePage />} />
-            <Route path="/join" element={<JoinPage />} />
-          </Routes>
-        </BrowserRouter>
+      <BrowserRouter basename="">
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/create" element={<CreateRafflePage />} />
+          <Route path="/join" element={<JoinPage />} />
+        </Routes>
+      </BrowserRouter>
 
-        <ToastContainer
-          position="top-right"
-          autoClose={8000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored" />
-      </Web3OnboardProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={8000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored" />
+
+      <div className="menu-container">
+        <div className="wrapper">
+          <Menu active={-1} />
+        </div>
+      </div>
     </div>
   );
 }

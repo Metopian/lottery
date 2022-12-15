@@ -1,0 +1,145 @@
+@import '../../../global.scss';
+
+.basic-settings-subpage {
+
+    display: flex;
+    gap: 124px;
+    padding-bottom: 160px;
+
+    >.form {
+        width: 400px;
+
+        .settings-option {
+            >.head {
+                padding: 16px 40px 16px 72px;
+                align-items: center;
+
+                >.text>.title {
+                    margin: 0;
+                }
+            }
+
+            >.body {
+                padding: 16px 40px;
+
+                >.container {
+                    padding: 0;
+                }
+            }
+
+            .r-form-group {
+                margin-bottom: 24px;
+
+                .r-label {
+                    margin-bottom: 8px;
+                }
+            }
+        }
+
+        .short {
+            width: 320px;
+
+            >.container {
+                width: 320px;
+            }
+
+            input {
+                width: 292px;
+            }
+        }
+    }
+
+
+    .DefaultRichTextEditorWrapper {
+        border-radius: 12px;
+    }
+
+    .tip {
+        color: #7D809A;
+        margin-bottom: 16px;
+        margin-top: -16px;
+    }
+
+    .tip-tap {
+        .ProseMirror {
+            height: 200px;
+            // overflow-y: auto;
+        }
+    }
+
+    .reward-container {
+        .react-switch {
+            display: none !important;
+        }
+
+        .expand-tip {
+            display: none;
+        }
+
+        >.settings-option>.head {
+            padding: 16px 40px;
+        }
+
+        .r-input>.container,
+        .r-textarea {
+            border: 1px solid #7D809A;
+
+        }
+
+        .tip {
+            margin-top: 0;
+        }
+
+        .r-number-input {
+            width: 320px;
+
+            input {
+                width: 220px;
+            }
+        }
+
+        .sbt-num-group .tip {
+            margin: 0 0 0 8px;
+            font-size: 13px;
+        }
+
+        .sbt-setting-option {
+            >.head>.text>.title {
+                font-size: 26px;
+            }
+        }
+    }
+
+}
+
+
+
+.time-input-wrapper {
+    position: relative;
+
+    input {
+        color: #ffffff;
+        outline: 0;
+        width: 400px;
+        padding: 0 14px;
+        font-size: 16px;
+        line-height: 150%;
+        resize: none;
+        height: 48px;
+        background: none;
+        font-family: 'Montserrat';
+        border-radius: 8px;
+        border: $default-border;
+
+        &:disabled {
+            color: #bbbbbb;
+        }
+    }
+
+    .calendar-icon {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        opacity: 0.6;
+    }
+}

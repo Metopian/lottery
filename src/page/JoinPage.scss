@@ -1,3 +1,5 @@
+@import '../global.scss';
+
 .join-page {
     >.title {
         font-size: 28px;
@@ -37,12 +39,13 @@
             margin: 12px 0;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 20px;
 
             input {
                 font-size: 16px;
                 border-radius: 4px;
                 padding: 4px 8px;
+                margin-left: 120px;
             }
 
             label {
@@ -50,11 +53,19 @@
                 line-height: 20px;
                 font-size: 16px;
             }
+
+            .main-button{
+                height: 32px;
+            }
         }
 
         >.function-wrapper {
+            margin-top: 32px;
             display: flex;
-            gap: 12px;
+            gap: 24px;
+            .main-button{
+                width: 120px;
+            }
         }
 
         .info-container {
@@ -80,5 +91,15 @@
                 }
             }
         }
+    }
+
+    >.footer {
+        height: 100px;
+        @include flex-centered-container;
+        gap: 24px;
+        border-top: 1px solid #555555;
+        width: 100vw;
+        background: rgba(42, 53, 71, 0.3);
+        // transform: translateX(min(calc(-50vw + 600px), 0px));
     }
 }

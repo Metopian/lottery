@@ -4,7 +4,7 @@
         font-family: Fjalla One;
         margin-bottom: 40px;
 
-         img {
+        img {
             transform: translate(-8px, 4px);
         }
     }
@@ -50,9 +50,9 @@
             padding: 6px 24px;
             border-radius: 8px;
 
-                &:hover {
-                    background: lightblue;
-                }
+            &:hover {
+                background: lightblue;
+            }
         }
     }
 }

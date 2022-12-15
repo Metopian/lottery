@@ -1,0 +1,214 @@
+@import '../../../../../global.scss';
+
+
+.nft-holder-restriction-card {
+    background: #27293B;
+    border-radius: 8px;
+    margin-top: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    position: relative;
+
+    >.close-button {
+        position: absolute;
+        right: -12px;
+        top: -12px;
+        cursor: pointer;
+    }
+
+    >.head {
+        display: flex;
+        // align-items: center;
+        justify-content: space-between;
+
+        .nft-cover {
+            display: flex;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 94px;
+
+            .wrapped-lazy-load-image {
+                width: 94px;
+                height: 94px;
+            }
+
+            >.name-wrapper {
+                width: 254px;
+                max-width: 254px;
+                padding: 16px;
+                background: #FAF9FC11;
+
+                >.title {
+                    font-family: 'Montserrat';
+                    font-size: 14px;
+                    line-height: 24px;
+                    color: rgba(255, 255, 255, 0.5);
+                    margin-bottom: 8px;
+                }
+
+                >.text {
+                    font-family: 'Montserrat';
+                    font-size: 20px;
+                    line-height: 30px;
+                    color: #FFFFFF;
+                    width: 224px;
+                    @include ellipsis(1);
+                }
+            }
+        }
+    }
+
+    >.extra {
+        margin-top: 40px;
+
+        .extra-requirement-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+
+            .extra-requirement-input {
+                width: 450px;
+                display: flex;
+                align-items: center;
+                border: 1px solid #7D809A;
+                height: 48px;
+                border-radius: 8px;
+                overflow: hidden;
+
+                &.holdings {
+                    width: auto;
+
+                    >.label {}
+                }
+
+                >.label {
+                    font-size: 16px;
+                    color: #7D809A;
+                    padding: 12px 12px;
+                    height: 48px;
+                    line-height: 24px;
+                    // border-right: 1px solid #7D809A;
+                }
+
+
+                >.traits-value {
+                    cursor: pointer;
+                    flex: 1;
+                    padding: 8px 7px;
+                    height: 48px;
+                    line-height: 24px;
+                    max-width: 100%;
+                    width: calc(100% - 200px);
+
+                    >.entity-wrapper {
+                        display: flex;
+                        align-items: center;
+                        overflow: hidden;
+                        flex-wrap: nowrap;
+                        gap: 8px;
+
+                        >.entity {
+                            padding: 4px 8px;
+                            font-size: 16px;
+                            line-height: 24px;
+                            color: #AD5CFF;
+                            background: rgba(255, 255, 255, 0.05);
+                            border-radius: 4px;
+                            @include ellipsis(1);
+
+                        }
+
+                        >.Placeholder {
+                            margin-top: 4px;
+                            margin-left: 4px;
+                        }
+
+                        >.Placeholder {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            width: 100%;
+
+                            >.chevron {
+                                transform: rotate(-90deg);
+                            }
+                        }
+                    }
+
+                }
+
+                >.input-wrapper {
+                    padding: 12px 8px 12px 0px;
+                    height: 48px;
+                    border-right: 1px solid #7D809A;
+                    display: flex;
+                    align-items: center;
+
+                    &:last-of-type {
+                        border: 0;
+                    }
+
+                    input {
+                        background: none;
+                        outline: none;
+                        border: 0;
+                        color: white;
+                        min-width: 0px;
+                        width: 32px;
+                        // text-align: center;
+                        font-size: 16px;
+                        line-height: 24px;
+                        color: #AD5CFF;
+                        background: rgba(255, 255, 255, 0.05);
+                        border: 4px;
+                        padding: 0 4px;
+                        font-family: Fjalla One;
+                        // transform: translateY(1px);
+                        // border-bottom: 1px solid #7D809A;
+
+                        &::placeholder {
+                            color: #AD5CFF;
+                            opacity: 0.5;
+                        }
+
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button {
+                            -webkit-appearance: none;
+                            margin: 0;
+                        }
+
+                        &[type=number] {
+                            -moz-appearance: textfield;
+                        }
+                    }
+
+                    >.unit {
+                        color: white;
+                        font-size: 16px;
+                        line-height: 24px;
+                        padding: 0 8px;
+                    }
+                }
+
+            }
+
+            >.add-button {
+                cursor: pointer;
+            }
+
+            >.splitter {
+                font-family: 'Fjalla One';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 13px;
+                color: #7D809A;
+                user-select: none;
+            }
+        }
+    }
+}

@@ -1,11 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { getAddress, getChainId, getContract, getProvider, switchChain } from '../utils/web3Utils';
+import React, { useEffect, useMemo, useState } from 'react';
+// import { getAddress, getChainId, getContract, getProvider, switchChain } from '../utils/web3Utils';
 import './JoinPage.scss';
 
 import { BulletList } from 'react-content-loader'
 import { arabToRoman } from 'roman-numbers';
 import moment from 'moment';
 import { toast } from 'react-toastify';
+import { useConnectWallet } from '@web3-onboard/react';
+import { getContract, getProvider, switchChain } from '../core/web3Utils';
+import MainButton from '../component/button/MainButton';
+
+const bscTestLuckyDrawAddr = "0x14169D6F660e95057fFd29452F1f056D4A3CECe9"
 
 const toInt = (num) => parseInt(num.toString())
 
@@ -15,33 +20,40 @@ const LoteryCard = (props: { id, luckdrawContract }) => {
     const [tickets, setTickets] = useState(1)
     const [tokenContract, setTokenContract] = useState(null)
 
+    const [{ wallet }, connect] = useConnectWallet()
+    const [account, chainId] =
+        useMemo(() => wallet?.accounts?.length ? [wallet.accounts[0].address, wallet.chains[0].id] : [], [wallet])
+
+
     useEffect(() => {
         if (!luckdrawContract)
             return
         const init = async () => {
             let res = await luckdrawContract.lottery(props.id)
-            let [tokenAddr, pool, maxTickets, ticketPrice, winnerRatio, winners, vrfRequestId, start, end, totalTickets, claimed] = res
+            let [spaceId, tokenAddr, pool, maxTickets, ticketPrice, winnerRatio, vrfRequestId,
+                start, end, totalTickets, claimed, requireSig] = res
             setData({
                 tokenAddr, pool: toInt(pool), maxTickets: toInt(maxTickets), ticketPrice: toInt(ticketPrice),
-                winnerRatio: winnerRatio.map(w => toInt(w)), winners: toInt(winners), vrfRequestId,
+                winnerRatio: winnerRatio.map(w => toInt(w)), winners: winnerRatio.length, vrfRequestId,
                 start: moment(toInt(start) * 1000), end: moment(toInt(end) * 1000),
                 totalTickets: toInt(totalTickets), claimed: toInt(claimed)
             })
 
-            setTokenContract(getContract(tokenAddr, require('../config/ERC20Abi.json').abi))
+            setTokenContract(getContract(tokenAddr, require('../config/ERC20Abi.json').abi, getProvider(wallet).getSigner()))
         }
         init()
     }, [id, luckdrawContract])
 
     const draw = async () => {
-        let address = await getAddress()
-        let chainId = await getChainId()
-        if (parseInt(chainId) != 0x61) {
-            switchChain("0x61")
-            alert("You are required to switch to BSC Testnet")
+
+        if (!account?.length) {
+            connect()
             return
         }
-
+        if (parseInt(chainId) !== 0x61) {
+            switchChain("0x61", getProvider(wallet))
+            return
+        }
         luckdrawContract.draw(id).then(() => {
             toast.success('Tx send', {
                 className: "r-toast",
@@ -72,11 +84,12 @@ const LoteryCard = (props: { id, luckdrawContract }) => {
     }
 
     const claim = async (amount) => {
-        let address = await getAddress()
-        let chainId = await getChainId()
-        if (parseInt(chainId) != 0x61) {
-            switchChain("0x61")
-            alert("You are required to switch to BSC Testnet")
+        if (!account?.length) {
+            connect()
+            return
+        }
+        if (parseInt(chainId) !== 0x61) {
+            switchChain("0x61", getProvider(wallet))
             return
         }
         luckdrawContract.claim(id).then(() => {
@@ -101,15 +114,16 @@ const LoteryCard = (props: { id, luckdrawContract }) => {
     }
 
     const purchase = async (amount) => {
-        let address = await getAddress()
-        let chainId = await getChainId()
-        if (parseInt(chainId) != 0x61) {
-            switchChain("0x61")
-            alert("You are required to switch to BSC Testnet")
+        if (!account?.length) {
+            connect()
+            return
+        }
+        if (parseInt(chainId) !== 0x61) {
+            switchChain("0x61", getProvider(wallet))
             return
         }
         // console.log(address, luckdrawContract)
-        const allowance = await tokenContract.allowance(address, luckdrawContract.address);
+        const allowance = await tokenContract.allowance(account, luckdrawContract.address);
         const val = data.ticketPrice * amount
         if (allowance < val) {
             await tokenContract.approve(luckdrawContract.address, val)
@@ -195,14 +209,16 @@ const LoteryCard = (props: { id, luckdrawContract }) => {
                 <BulletList width={'300px'} />
         }
         <div className='purchase-wrapper'>
-            <label>Amount</label>
+            <label>Join</label>
             <input onChange={e => setTickets(parseInt(e.target.value))} value={tickets} type='number' />
             {/* <input onChange={e=>setTickets(parseInt())} value={tickets} /> */}
-            <button onClick={() => purchase(tickets)}>Purchase</button>
+            <MainButton onClick={() => purchase(tickets)}
+                disabled={moment().isBefore(moment(data?.start)) ||
+                    moment().isAfter(moment(data?.end))}>Purchase</MainButton>
         </div>
         <div className='function-wrapper'>
-            <button onClick={claim}>Claim</button>
-            <button onClick={draw}>Draw</button>
+            <MainButton onClick={claim}>Claim</MainButton>
+            <MainButton onClick={draw} disabled={moment().isBefore(moment(data?.end))}>Draw</MainButton>
         </div>
     </div>
 }
@@ -210,29 +226,28 @@ const LoteryCard = (props: { id, luckdrawContract }) => {
 const JoinPage = () => {
     // BSC TESTNET
 
-    const bscTestTokenAddr = "0xa2dFFea4f70d3F17f168120112627ff51C57e3F6"
-    const bscTestLuckyDrawAddr = "0xd5b2698acAE508A30EF19B1a8D44081754Aa1923"
     const [luckyDrawContract, setLuckyDrawContract] = useState(null)
-    // const tokenVal = data.max
-    // const token = "0xd5b2698acAE508A30EF19B1a8D44081754Aa1923"
 
-    // const contract = getContract(bscTestToken, require('../config/ERC20Abi.json'))
-    // const res = await contract.allowance(address, bscTestLuckyDraw)
-    // console.log(res)
+
+    const [{ wallet }, connect] = useConnectWallet()
+    const [account, chainId] =
+        useMemo(() => wallet?.accounts?.length ? [wallet.accounts[0].address, wallet.chains[0].id] : [], [wallet])
 
     const [lotIds, setLotIds] = useState(null)
 
     useEffect(() => {
         const init = async () => {
-            let address = await getAddress()
-            let chainId = await getChainId()
-            if (parseInt(chainId) != 0x61) {
-                switchChain("0x61")
-                alert("You are required to switch to BSC Testnet")
-                window.location.href = "/"
+            if (!account?.length) {
+                connect()
                 return
             }
-            const contract = getContract(bscTestLuckyDrawAddr, require('../config/LuckyDrawAbi.json').abi, getProvider().getSigner())
+            if (parseInt(chainId) !== 0x61) {
+                alert("You are required to switch to BSC Testnet")
+                switchChain("0x61", getProvider(wallet))
+                return
+            }
+            const contract = getContract(bscTestLuckyDrawAddr, require('../config/LuckyDrawAbi.json').abi,
+                getProvider(wallet).getSigner())
             setLuckyDrawContract(contract)
             let events = await contract.queryFilter(contract.filters.CreateLottery(), -4999)
             console.log(events)
@@ -243,19 +258,25 @@ const JoinPage = () => {
         setTimeout(() => {
             init()
         }, 1000);
-    }, [])
+    }, [account, chainId])
 
     return <div className='join-page page'>
         <div className='title'><a className='back-button' onClick={() => {
             window.location.href = "/"
         }}><img src="https://oss.metopia.xyz/imgs/back-button.svg" alt="back" title='back' /></a>
-            Lottery list (lotteries created in the recent 5000 blocks are displayed)</div>
+            Lottery list (Luckydraws created in the recent 5000 blocks are displayed)</div>
         <div className='container'>
             {
                 lotIds ? lotIds.map(id => {
                     return <LoteryCard id={id} luckdrawContract={luckyDrawContract} key={`LoteryCard-${id}`} />
                 }) : <BulletList width={400} />
             }
+        </div>
+
+        <div className='footer'>
+            <MainButton onClick={() => {
+                window.location.href = "/create"
+            }}>Create my Luckydraw</MainButton>
         </div>
     </div>
 }

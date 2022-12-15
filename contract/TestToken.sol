@@ -12,7 +12,4 @@ contract TestToken is ERC20 {
         _mint(msg.sender, 100000);
     }   
 
-    function decimals() public view override returns (uint8) {
-        return 0;
-    }
 }

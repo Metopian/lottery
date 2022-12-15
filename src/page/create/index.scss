@@ -1,0 +1,210 @@
+@import '../../global.scss';
+
+.create-raffle-page {
+    width: 1200px;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 90px);
+    // padding-top: 120px;
+
+    a {
+        @include colorful;
+    
+        &:hover{
+            text-decoration: underline;
+        }
+    }
+    
+    >.head {
+        position: relative;
+        text-align: center;
+        padding: 40px 0;
+
+        >.title {
+            font-family: 'Fjalla One';
+            font-weight: bold;
+            font-size: 60px;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        >.subtitle {
+            font-family: 'Fjalla One';
+            font-size: 40px;
+            line-height: 49px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 20px;
+
+            >.number {
+                background: linear-gradient(122.65deg, #A195FF 23.36%, #FFA9CA 132.77%), #A36FFE;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                font-size: 48px;
+            }
+        }
+
+        >.back-button {
+            position: absolute;
+            left: 0;
+            top: 60px;
+        }
+    }
+
+
+    .head-fixed {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // position: sticky;
+        left: 0;
+        top: 189px;
+        background: rgba(42, 53, 71, 0.1);
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+        margin-top: -100px;
+        // margin-bottom: -20px;
+        // margin-left: calc(600px - 50vw);
+        width: 100vw;
+
+        &.invisible {
+
+            &,
+            * {
+                user-select: none;
+                cursor: default;
+            }
+        }
+
+        >.container {
+            width: 1200px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+
+            >.title {
+                font-family: 'Fjalla One';
+                font-weight: bold;
+                font-size: 32px;
+                text-align: center;
+                color: #FFFFFF;
+                @include ellipsis(1);
+                margin-right: 20px;
+            }
+
+            .step-linear-indicator {
+                margin: 0 0 0 auto !important;
+                gap: 12px;
+
+                // margin-left: auto;
+                .step-linker {
+                    width: 40px;
+                }
+
+                .step-icon {
+                    gap: 12px;
+                }
+            }
+
+            >.back-button {
+                cursor: pointer;
+                margin-right: 20px;
+            }
+        }
+    }
+
+    >.body {
+        flex: 1;
+        width: 300vw;
+        padding: 40px 0;
+        // background: linear-gradient(180deg, #333333dd 0%, #0F111Edd 100%);
+        // transform: translateX(calc(-50vw + 600px));
+        margin-left: calc(-50vw + 600px);
+
+        >.container {
+            width: 100%;
+            display: flex;
+            overflow-y: hidden;
+            overflow-x: hidden;
+            transition: transform 300ms;
+
+            >.subpage-wrapper {
+                width: 100vw;
+                display: flex;
+                justify-content: center;
+                overflow: hidden;
+
+                >.subpage {
+                    width: 1200px;
+                }
+            }
+        }
+
+        &.page1>.container {
+            transform: 0;
+        }
+
+        &.page2>.container {
+            transform: translateX(-100vw);
+        }
+
+        &.page2 .basic-settings-subpage {
+            height: 0;
+        }
+
+        &.page1 .entries-subpage {
+            height: 0;
+        }
+
+        .form {
+            width: 560px;
+
+            .r-form-group {
+                width: 560px;
+            }
+
+            input,
+            textarea,.r-textarea {
+                width: 560px;
+                max-width: 560px;
+            }
+        }
+    }
+
+    >.footer {
+        height: 100px;
+        @include flex-centered-container;
+        gap: 24px;
+        border-top: 1px solid #555555;
+        width: 100vw;
+        background: rgba(42, 53, 71, 0.3);
+        transform: translateX(min(calc(-50vw + 600px), 0px));
+    }
+
+
+    >.container {}
+}
+
+
+@media screen and (max-width: 1200px) {
+
+    .create-raffle-page {
+        >.head-fixed {
+            margin-left: 0;
+            width: 100vw;
+        }
+
+        >.footer {
+            width: 1200px;
+            margin-left: 0;
+            transform: translateX(0);
+        }
+    }
+
+}
+
+.rdtPicker {
+    background: #0F111E !important;
+}

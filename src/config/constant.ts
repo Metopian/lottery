@@ -18,7 +18,7 @@ const chainRpcMap = {
     '0x5': 'https://goerli.infura.io/v3/',
     '0x38': 'https://bscrpc.com', // 56
     '0x89': 'https://polygon-rpc.com/',
-    '0x61': 'https://bsctestapi.terminet.io/rpc',
+    '0x61': 'https://data-seed-prebsc-2-s3.binance.org:8545',
 }
 
 const chainExplorerMap = {

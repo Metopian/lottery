@@ -1,0 +1,119 @@
+@import '../../../global.scss';
+
+.entries-subpage {
+
+    width: 1200px;
+    min-height: calc(100vh - 200px);
+
+    >.head {
+        color: white;
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    >.title {
+        font-size: 20px;
+        line-height: 30px;
+        color: #ffffff;
+        margin-bottom: 16px;
+    }
+
+    .specified-user-container {
+        padding: 24px 46px;
+
+        .tip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #7D809A;
+            margin-bottom: 16px;
+
+            img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        >.main-container {
+            padding: 0;
+        }
+    }
+
+    .metobot-adder {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 16px;
+        margin-top: -16px;
+        margin-bottom: 16px;
+
+        a {
+            margin-left: 8px;
+            margin-right: 8px;
+            text-decoration: none;
+            color: #AD5CFF;
+            font-weight: bold;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+}
+
+.restricted-participants-option {
+    margin: 0;
+    padding: 24px;
+    background: #1B1E31;
+    border-radius: 8px;
+    margin-bottom: 16px;
+
+    .expand-tip {
+        display: none;
+    }
+
+    >.head {
+        padding: 0;
+        border: 0;
+
+        >.text>.title {
+            margin: 0;
+        }
+    }
+
+    >.body {
+        >.container {
+            padding: 0;
+
+
+
+            >.button-container {
+                display: flex;
+                justify-content: center;
+
+                >.button {
+                    width: fit-content;
+                    cursor: pointer;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 8px;
+
+                    >.text {
+                        color: #AD5CFF;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+
+    &.discord {
+        >.body>.container {
+            background: #27293B;
+            border-radius: 8px;
+            margin-top: 24px;
+            padding: 24px;
+            position: relative;
+        }
+    }
+}
