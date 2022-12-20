@@ -88,7 +88,7 @@ contract LuckyDraw is VRFConsumerBaseV2, ConfirmedOwner, ReentrancyGuard {
     uint32 callbackGasLimit = 1000000;
     uint16 requestConfirmations = 3;
     VRFCoordinatorV2Interface COORDINATOR;
-    address private vrfCoordinatorAddr = 0x6A2AAd07396B36Fe02a22b33cf443582f682c82f;
+    address private vrfCoordinatorAddr = 0xc587d9053cd1118f25F645F9E08BB98c9712A4EE;
         
     mapping(uint256 => RequestStatus) private s_requests;
 
@@ -283,7 +283,7 @@ contract LuckyDraw is VRFConsumerBaseV2, ConfirmedOwner, ReentrancyGuard {
         );
 
         uint256 prizeVal = prize(lotId);
-        require(prizeVal > 0 && lot.pool - lot.claimed >= prizeVal, "not claimable");
+        require(prizeVal > 0 && lot.pool - lot.claimed > prizeVal, "not claimable");
 
         IERC20 token = IERC20(lot.tokenAddr);
         token.transfer(msg.sender, prizeVal);
@@ -341,7 +341,7 @@ contract LuckyDraw is VRFConsumerBaseV2, ConfirmedOwner, ReentrancyGuard {
         uint256 length
     ) public view returns (address[] memory) {
         Lottery storage lot = lotteries[lotId];
-        require(cursor + length < lot.counter.current(), "invalid len");
+        require(cursor + length <= lot.counter.current(), "invalid len");
 
         address[] memory res = new address[](length);
         for (uint256 i = cursor; i < cursor + length; i++) {
