@@ -151,11 +151,14 @@ const LotteryCard = (props: { id, luckdrawContract, joinRaffle }) => {
             switchChain("0x61", getProvider(wallet))
             return
         }
-        luckdrawContract.claim(id).then(() => {
-            toast.success('Tx send', {
-                className: "r-toast",
-                bodyClassName: "r-toast-body",
-            })
+        luckdrawContract.claim(id).then((d) => {
+            if (d.hash) {
+                toast.success('Tx send', {
+                    className: "r-toast",
+                    bodyClassName: "r-toast-body",
+                })
+                setClaimDisabled(true)
+            }
         }).catch(e => {
             if (e.error.data.message.indexOf("no result") > -1) {
                 toast.error('Lottery winners are not revealed', {
@@ -182,7 +185,7 @@ const LotteryCard = (props: { id, luckdrawContract, joinRaffle }) => {
         )
     }, [data, vrfFilled])
 
-
+    const [claimDisabled, setClaimDisabled] = useState(false)
     return <div className='lotery-card'>
         <div className='title'>Lottery - {arabToRoman(id + 1)}</div>
         {
@@ -238,7 +241,7 @@ const LotteryCard = (props: { id, luckdrawContract, joinRaffle }) => {
                 disabled={moment().isBefore(moment(data?.start)) ||
                     moment().isAfter(moment(data?.end)) || myTickets?.length > 0}
                 loading={myTickets == null}>Join</MainButton>
-            <MainButton onClick={claim} disabled={claimable <= 0}>Claim</MainButton>
+            <MainButton onClick={claim} disabled={claimable <= 0 || claimDisabled}>Claim</MainButton>
             <MainButton onClick={draw} disabled={moment().isBefore(moment(data?.end)) ||
                 parseInt(data?.vrfRequestId) > 0} loading={drawingWinner}>Draw winners</MainButton>
         </div>
