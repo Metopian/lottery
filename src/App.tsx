@@ -10,7 +10,6 @@ import { useConnectWallet } from '@web3-onboard/react';
 import CreateRafflePage from './page/create';
 import JoinPage from './page/join';
 
-
 function App() {
 
   const [{ wallet }, connect] = useConnectWallet()
